@@ -1,12 +1,9 @@
 
 PLAY [Connect to Cisco CSR1000V and run commands] ******************************
 
-TASK [Show version] ************************************************************
-ok: [csr1]
-
-TASK [Show running config] *****************************************************
-ok: [csr1]
+TASK [Shutdown Loopback10] *****************************************************
+changed: [csr1]
 
 PLAY RECAP *********************************************************************
-csr1                       : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+csr1                       : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

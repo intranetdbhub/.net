@@ -1,28 +1,29 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    ANSIBLE_HOST_KEY_CHECKING = 'False'
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        git credentialsId: 'your-git-creds-id', url: 'https://github.com/your-repo/csr-secure-pipeline.git'
-      }
+    environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
     }
 
-    stage('Run Ansible Playbook') {
-      steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'csr-ssh-key', keyFileVariable: 'SSH_KEY')]) {
-          sh '''
-            ansible-playbook -i inventory/inventory.ini playbooks/run_cisco_commands.yml \
-              --private-key $SSH_KEY
-          '''
+    stages {
+        stage('Checkout from GitHub') {
+            steps {
+                sh '''
+                    git clone https://intranetdbhub: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@github.com/intranetdbhub/.net.git
+                    cd .net/Projects/csr-secure-pipeline
+                '''
+            }
         }
-      }
-    }
-  }
-}
 
+        stage('Run Ansible Playbook') {
+            steps {
+                sh '''
+                    cd .net/Projects/csr-secure-pipeline
+                    ansible-playbook -i inventory/inventory.ini playbooks/run_cisco_commands.yml \
+                      -e ansible_user=ec2-user -e ansible_password=cisco
+                '''
+            }
+        }
+    }
+}
 

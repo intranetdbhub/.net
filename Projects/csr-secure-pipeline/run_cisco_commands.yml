@@ -1,17 +1,14 @@
 ---
 - name: Connect to Cisco CSR1000V and run commands
-  hosts: cisco_csr
+  hosts: csr1
   gather_facts: no
+  connection: ansible.netcommon.network_cli
 
   tasks:
-    - name: Show version
-      ios_command:
-        commands:
-          - show version
+    - name: Shutdown Loopback10
+      ios_config:
+        lines:
+          - shutdown
+        parents: interface Loopback10
 
-    - name: Show running config
-      ios_command:
-        commands:
-          - show running-config | section hostname
-          - show running-config | section interface
 
