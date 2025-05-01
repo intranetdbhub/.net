@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+
+  environment {
+    ANSIBLE_HOST_KEY_CHECKING = 'False'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git credentialsId: 'your-git-creds-id', url: 'https://github.com/your-repo/csr-secure-pipeline.git'
+      }
+    }
+
+    stage('Run Ansible Playbook') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'csr-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+          sh '''
+            ansible-playbook -i inventory/inventory.ini playbooks/run_cisco_commands.yml \
+              --private-key $SSH_KEY
+          '''
+        }
+      }
+    }
+  }
+}
+
+
