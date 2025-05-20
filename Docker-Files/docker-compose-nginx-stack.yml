@@ -1,0 +1,36 @@
+services:
+  web-server-1:
+    image: nginx
+    container_name: Web-Server-1
+    ports:
+      - "8081:80"
+    volumes:
+      - Web-Server-1:/usr/share/nginx/html
+      
+    restart: unless-stopped
+
+  web-server-2:
+    image: nginx
+    container_name: Web-Server-2
+    ports:
+      - "8082:80"
+    volumes:
+      - Web-Server-2:/usr/share/nginx/html
+    restart: unless-stopped
+
+  web-server-3:
+    image: nginx
+    container_name: Web-Server-3
+    ports:
+      - "8083:80"
+    volumes:
+      - Web-Server-3:/usr/share/nginx/html
+    restart: unless-stopped
+
+volumes:
+  Web-Server-1:
+    external: true
+  Web-Server-2:
+    external: true
+  Web-Server-3:
+    external: true

@@ -1,0 +1,32 @@
+services:
+  aurcoste001a-uld001a:
+    build: .
+    container_name: aurcoste001a-uld001a
+    ports:
+      - "7081:22"
+    volumes:
+      - aurcoste001a-uld001a:/Documents
+      - shared-documents:/Shared
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+
+  aurcoste001a-uld002a:
+    build: .
+    container_name: aurcoste001a-uld002a
+    ports:
+      - "7082:22"
+    volumes:
+      - aurcoste001a-uld002a:/Documents
+      - shared-documents:/Shared
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+
+volumes:
+  aurcoste001a-uld001a:
+    external: true
+  aurcoste001a-uld002a:
+    external: true
+  shared-documents:
+    external: false  # So the folder can be shared between containers in the stack.
