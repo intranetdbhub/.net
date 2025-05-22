@@ -1,0 +1,121 @@
+services:
+  # Hadoop 2.x Cluster
+  namenode2:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    container_name: hadoop2-namenode
+    environment:
+      - CLUSTER_NAME=legacy
+      - CORE_CONF_fs_defaultFS=hdfs://namenode2:9000
+    ports:
+      - "50070:50070"
+      - "9000:9000"
+    volumes:
+      - namenode2:/hadoop/dfs/name
+
+  datanode2:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    container_name: hadoop2-datanode
+    environment:
+      - CLUSTER_NAME=legacy
+      - CORE_CONF_fs_defaultFS=hdfs://namenode2:9000
+    volumes:
+      - datanode2:/hadoop/dfs/data
+    depends_on:
+      - namenode2
+
+  # Hadoop 3.x Cluster
+  namenode3:
+    image: apache/hadoop:3.3.6
+    container_name: hadoop3-namenode
+    environment:
+      - HDFS_CONF_dfs_namenode_name_dir=file:///hadoop/dfs/name
+    command: ["hdfs", "namenode"]
+    ports:
+      - "59870:9870"
+      - "59090:9000"
+    volumes:
+      - namenode3:/hadoop/dfs/name
+
+  datanode3:
+    image: apache/hadoop:3.3.6
+    container_name: hadoop3-datanode
+    environment:
+      - HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data
+    command: ["hdfs", "datanode"]
+    ports:
+      - "59864:9864"
+    volumes:
+      - datanode3:/hadoop/dfs/data
+    depends_on:
+      - namenode3
+
+  # PostgreSQL for Hive and Hue
+  hive-metastore-postgresql:
+    image: postgres:10
+    container_name: hive-metastore-postgresql
+    environment:
+      - POSTGRES_DB=metastore
+      - POSTGRES_USER=hive
+      - POSTGRES_PASSWORD=hive
+
+  # Hive Metastore
+  hive-metastore:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-metastore
+    environment:
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionURL=jdbc:postgresql://hive-metastore-postgresql:5432/metastore
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionDriverName=org.postgresql.Driver
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionUserName=hive
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionPassword=hive
+    depends_on:
+      - hive-metastore-postgresql
+      - namenode2
+
+  # HiveServer2
+  hive-server:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-server
+    ports:
+      - "10000:10000"
+    environment:
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionURL=jdbc:postgresql://hive-metastore-postgresql:5432/metastore
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionDriverName=org.postgresql.Driver
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionUserName=hive
+      - HIVE_CORE_CONF_javax_jdo_option_ConnectionPassword=hive
+    depends_on:
+      - hive-metastore
+
+  # Hue UI
+  hue:
+    image: gethue/hue:latest
+    container_name: hue
+    ports:
+      - "8888:8888"
+    environment:
+      - HUE_DATABASE_ENGINE=postgresql_psycopg2
+      - HUE_DATABASE_NAME=metastore
+      - HUE_DATABASE_USER=hive
+      - HUE_DATABASE_PASSWORD=hive
+      - HUE_DATABASE_HOST=hive-metastore-postgresql
+      - HUE_HIVE_SERVER_HOST=hive-server
+    depends_on:
+      - hive-server
+      - hive-metastore-postgresql
+
+  # pgAdmin UI
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - hive-metastore-postgresql
+
+volumes:
+  namenode2:
+  datanode2:
+  namenode3:
+  datanode3:

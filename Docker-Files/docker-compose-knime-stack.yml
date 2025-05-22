@@ -1,0 +1,22 @@
+services:
+  knime:
+    build:
+      context: .
+      dockerfile: Dockerfile.knime
+    container_name: knime_gui
+    ports:
+      - "6081:80"         # noVNC access via browser
+      - "5901:5901"       # Optional: VNC access
+    volumes:
+      - shared-documents:/home/ubuntu/Shared
+      - knime_gui:/home/ubuntu/KNIME
+    environment:
+      - USER=ubuntu
+      - PASSWORD=vncpassword
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  shared-documents:
+    external: true
+  knime_gui:
