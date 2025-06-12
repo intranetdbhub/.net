@@ -1,0 +1,36 @@
+cd services:
+  kali:
+    image: lscr.io/linuxserver/kali-linux:latest   
+    container_name: kali-linux
+    security_opt:
+      - seccomp:unconfined  # Enables modern GUI compatibility
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - TITLE=Kali Linux
+    volumes:
+      - kali-config:/config
+    ports:
+      - "3000:3000"   # HTTP GUI port
+      - "3001:3001"   # HTTPS GUI port
+    #devices:
+    #  - /dev/dri:/dev/dri  # optional: GPU acceleration
+    networks:
+      - kali-network
+    restart: unless-stopped
+
+volumes:
+  kali-config:
+
+networks:
+  kali-network:
+    driver: bridge
+
+
+#Note: Commit the Container as a Custom Image to retain all saved changes & tools
+#- Exit the container and run this on the host to commit the container with your own custom local image: 
+#docker commit kali-linux windows/local/kali-custom:latest
+
+#- Update the docker-compose-kali-linux-stack.yml  file to use the above image (this will replace line #3 in the .yml): 
+#image: windows/local/kali-custom:latest
