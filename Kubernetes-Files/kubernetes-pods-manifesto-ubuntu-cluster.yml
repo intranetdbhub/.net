@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-deploy-worker1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-worker1
+  template:
+    metadata:
+      labels:
+        app: ubuntu-worker1
+    spec:
+      nodeName: ubuntu-cluster-worker
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["sleep", "infinity"]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-deploy-worker2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-worker2
+  template:
+    metadata:
+      labels:
+        app: ubuntu-worker2
+    spec:
+      nodeName: ubuntu-cluster-worker2
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["sleep", "infinity"]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-deploy-worker3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-worker3
+  template:
+    metadata:
+      labels:
+        app: ubuntu-worker3
+    spec:
+      nodeName: ubuntu-cluster-worker3
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["sleep", "infinity"]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-deploy-worker4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-worker4
+  template:
+    metadata:
+      labels:
+        app: ubuntu-worker4
+    spec:
+      nodeName: ubuntu-cluster-worker4
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["sleep", "infinity"]
