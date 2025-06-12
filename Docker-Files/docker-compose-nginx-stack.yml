@@ -6,7 +6,8 @@ services:
       - "8081:80"
     volumes:
       - Web-Server-1:/usr/share/nginx/html
-      
+    networks:
+      - docker-compose-nginx-stack-network      
     restart: unless-stopped
 
   web-server-2:
@@ -16,6 +17,8 @@ services:
       - "8082:80"
     volumes:
       - Web-Server-2:/usr/share/nginx/html
+    networks:
+      - docker-compose-nginx-stack-network
     restart: unless-stopped
 
   web-server-3:
@@ -25,6 +28,8 @@ services:
       - "8083:80"
     volumes:
       - Web-Server-3:/usr/share/nginx/html
+    networks:
+      - docker-compose-nginx-stack-network
     restart: unless-stopped
 
 volumes:
@@ -34,3 +39,7 @@ volumes:
     external: true
   Web-Server-3:
     external: true
+
+networks:
+  docker-compose-nginx-stack-network:
+    driver: bridge
