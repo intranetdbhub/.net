@@ -1,3 +1,29 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-worker1
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/worker1
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-worker1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,9 +40,46 @@ spec:
     spec:
       nodeName: ubuntu-cluster-worker
       containers:
-      - name: ubuntu
-        image: ubuntu
-        command: ["sleep", "infinity"]
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - mountPath: /mnt/data
+              name: vol-worker1
+            - mountPath: /mnt/shared
+              name: shared-storage
+      volumes:
+        - name: vol-worker1
+          persistentVolumeClaim:
+            claimName: pvc-worker1
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: shared-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-worker2
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/worker2
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-worker2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
 
 ---
 apiVersion: apps/v1
@@ -35,9 +98,46 @@ spec:
     spec:
       nodeName: ubuntu-cluster-worker2
       containers:
-      - name: ubuntu
-        image: ubuntu
-        command: ["sleep", "infinity"]
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - mountPath: /mnt/data
+              name: vol-worker2
+            - mountPath: /mnt/shared
+              name: shared-storage
+      volumes:
+        - name: vol-worker2
+          persistentVolumeClaim:
+            claimName: pvc-worker2
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: shared-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-worker3
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/worker3
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-worker3
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
 
 ---
 apiVersion: apps/v1
@@ -56,9 +156,46 @@ spec:
     spec:
       nodeName: ubuntu-cluster-worker3
       containers:
-      - name: ubuntu
-        image: ubuntu
-        command: ["sleep", "infinity"]
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - mountPath: /mnt/data
+              name: vol-worker3
+            - mountPath: /mnt/shared
+              name: shared-storage
+      volumes:
+        - name: vol-worker3
+          persistentVolumeClaim:
+            claimName: pvc-worker3
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: shared-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-worker4
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/worker4
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-worker4
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
 
 ---
 apiVersion: apps/v1
@@ -77,6 +214,43 @@ spec:
     spec:
       nodeName: ubuntu-cluster-worker4
       containers:
-      - name: ubuntu
-        image: ubuntu
-        command: ["sleep", "infinity"]
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - mountPath: /mnt/data
+              name: vol-worker4
+            - mountPath: /mnt/shared
+              name: shared-storage
+      volumes:
+        - name: vol-worker4
+          persistentVolumeClaim:
+            claimName: pvc-worker4
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: shared-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: shared-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /shared-k8s-volume
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
