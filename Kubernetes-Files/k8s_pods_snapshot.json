@@ -1,0 +1,128 @@
+[
+  {
+    "name": "grafana-58ff55c6b9-n7mkc",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "10.244.2.3",
+    "node": "ubuntu-cluster-worker3"
+  },
+  {
+    "name": "node-exporter-2t8qc",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "172.21.0.3",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "node-exporter-97qdg",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "172.21.0.7",
+    "node": "ubuntu-cluster-worker2"
+  },
+  {
+    "name": "node-exporter-dgx4m",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "172.21.0.6",
+    "node": "ubuntu-cluster-worker4"
+  },
+  {
+    "name": "node-exporter-ffvvv",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "172.21.0.5",
+    "node": "ubuntu-cluster-worker3"
+  },
+  {
+    "name": "prometheus-58cd678dfc-w5x4z",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "50m",
+    "ip": "10.244.4.3",
+    "node": "ubuntu-cluster-worker2"
+  },
+  {
+    "name": "ubuntu-deploy-balanced-5c854bbd5f-ksx72",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.3.2",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "ubuntu-deploy-balanced-5c854bbd5f-q59db",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.3.5",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "ubuntu-deploy-balanced-5c854bbd5f-q9rrh",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.3.4",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "ubuntu-deploy-balanced-5c854bbd5f-r6dg8",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.3.3",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "ubuntu-deploy-worker1-54f6b4df74-nvbqp",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.3.6",
+    "node": "ubuntu-cluster-worker"
+  },
+  {
+    "name": "ubuntu-deploy-worker2-5f78fc95db-hsmq7",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.4.2",
+    "node": "ubuntu-cluster-worker2"
+  },
+  {
+    "name": "ubuntu-deploy-worker3-7ddb57c689-bqmww",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.2.2",
+    "node": "ubuntu-cluster-worker3"
+  },
+  {
+    "name": "ubuntu-deploy-worker4-6f6ff88f6-7wphf",
+    "ready": "1/1",
+    "status": "Running",
+    "restarts": 0,
+    "age": "55m",
+    "ip": "10.244.5.2",
+    "node": "ubuntu-cluster-worker4"
+  }
+]
