@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  winserver2019:
+    image: sickcodes/docker-qemu:ubuntu
+    container_name: winserver2019
+    privileged: true
+    devices:
+      - /dev/kvm
+    environment:
+      RAM: "4G"
+      CORES: "4"
+    volumes:
+      - ./Windows_Server_2019.ISO:/iso.iso
+      - ./disk1.img:/disk1.img
+      - ./disk2.img:/disk2.img
+    command: >
+      -m 4096 -smp 4
+      -cdrom /iso.iso
+      -drive file=/disk1.img,format=raw
+      -drive file=/disk2.img,format=raw
+      -boot d
+      -net nic
+      -net user,hostfwd=tcp::3389-:3389
+      -vga std
+      -nographic
