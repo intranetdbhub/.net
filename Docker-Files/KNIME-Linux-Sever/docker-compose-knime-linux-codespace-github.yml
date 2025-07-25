@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  knime:
+    image: dorowu/ubuntu-desktop-lxde-vnc
+    container_name: FRECASTE002-STE002A
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "8080:80"     # Web VNC (browser access)
+      - "5900:5900"   # Native VNC (optional)
+    volumes:
+      - ./knime:/opt/knime                        # Persistent KNIME install path
+      - ./workspace:/home/ubuntu/knime-workspace # Persistent KNIME workspace
+      - ./disk1.img:/disk1.img                   # Optional virtual disk 1
+      - ./disk2.img:/disk2.img                   # Optional virtual disk 2
+    environment:
+      VNC_PASSWORD: "Almamoroni12@"
+    command: >
+      bash -c "
+        apt-get update &&
+        DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          wget curl git nano vim less jq unzip zip htop \
+          python3 python3-pip golang docker.io \
+          ansible terraform openssh-client openssh-server \
+          iputils-ping net-tools build-essential \
+          ca-certificates gnupg software-properties-common \
+          libgl1 libcanberra-gtk-module tmux screen nodejs npm sqlite3 postgresql \
+          openjdk-17-jre &&
+        if [ ! -d /opt/knime ]; then
+          wget https://download.knime.org/analytics-platform/linux/knime-latest-linux.gtk.x86_64.tar.gz &&
+          tar -xvzf knime-latest-linux.gtk.x86_64.tar.gz &&
+          mv knime_* /opt/knime &&
+          rm knime-latest-linux.gtk.x86_64.tar.gz;
+        fi &&
+        export _JAVA_OPTIONS='-Xmx4g' &&
+        /opt/knime/knime -data /home/ubuntu/knime-workspace
+      "
+    networks:
+      - github-codespace
+
+networks:
+  github-codespace:
+    driver: bridge
