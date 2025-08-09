@@ -1,0 +1,46 @@
+- name: Run show commands on Cisco devices
+  hosts: cisco_devices
+  gather_facts: no
+  tasks:
+
+    - name: Run common show commands on all devices
+      cisco.ios.ios_command:
+        commands:
+          - show interfaces description
+          - show ip interface brief
+          - show ip route
+          - show ip arp
+          - show version | include uptime
+          - show processes cpu
+          - show clock
+      register: output_common
+
+    - name: Print common command output
+      debug:
+        var: output_common.stdout_lines
+
+    - name: Run router-specific commands
+      when: inventory_hostname == "AURCOSTE001A-CSR001"
+      cisco.ios.ios_command:
+        commands:
+          - show controllers FastEthernet0/0
+          - show controllers FastEthernet0/1
+      register: output_router
+
+    - name: Print router command output
+      when: inventory_hostname == "AURCOSTE001A-CSR001"
+      debug:
+        var: output_router.stdout_lines
+
+    - name: Run switch-specific commands
+      when: inventory_hostname == "AURCOSTE001A-CSS001A"
+      cisco.ios.ios_command:
+        commands:
+          - show vlan
+          - show mac address-table
+      register: output_switch
+
+    - name: Print switch command output
+      when: inventory_hostname == "AURCOSTE001A-CSS001A"
+      debug:
+        var: output_switch.stdout_lines
