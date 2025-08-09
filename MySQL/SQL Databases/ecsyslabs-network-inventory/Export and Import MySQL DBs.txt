@@ -1,0 +1,69 @@
+*** How to save a database in MySQL Workbench (GUI - Windows)
+
+Open MySQL Workbench and connect to the server.
+
+Go to Server → Data Export.
+
+In Schemas, select ecsyslabs-network-inventory.
+
+On the right, choose:
+
+Dump Structure and Data (full backup)
+
+Check Include Create Schema
+
+(Optional) Add DROP TABLE statements for easier re-import on top of existing objects
+
+At the bottom, choose Export to Self-Contained File and pick a path, e.g.
+C:\Backups\ecsyslabs-network-inventory.sql
+
+Click Start Export.
+
+This produces one .sql file containing CREATE DATABASE/TABLE and INSERT statements.
+
+Restore in Workbench
+Server → Data Import.
+
+Choose Import from Self-Contained File and select your .sql.
+
+Target Schema: create/select ecsyslabs-network-inventory.
+
+Click Start Import.
+
+*** How to save a database in MySQL Workbench (GUI - Linux)
+Open MySQL Workbench and connect to your MySQL server.
+
+In the top menu, go to:
+Server → Data Export
+
+In the left panel (Schemas), select ecsyslabs-network-inventory.
+
+On the right:
+
+Choose Dump Structure and Data (full backup)
+
+Check Include Create Schema
+
+At the bottom:
+
+Select Export to Self-Contained File
+
+Browse to where you want the .sql file saved, e.g.:
+/home/yourusername/backups/ecsyslabs-network-inventory.sql
+
+Click Start Export.
+
+This will give you one .sql file you can later re-import on any MySQL server.
+
+
+
+*** How to save a database in MySQL Workbench (Command Line - Linux)
+
+mysqldump -u root -p --routines --events --triggers \
+  ecsyslabs-network-inventory > /home/yourusername/backups/ecsyslabs-network-inventory.sql
+
+Check DB exists:
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS \`ecsyslabs-network-inventory\`;"
+
+Import (Restore) the Backup:
+mysql -u root -p ecsyslabs-network-inventory < /home/yourusername/backups/ecsyslabs-network-inventory.sql
