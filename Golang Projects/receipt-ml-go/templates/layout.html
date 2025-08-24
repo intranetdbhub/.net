@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Receipt OCR</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <header>
+    <h1><a href="/">Receipt OCR</a></h1>
+    <nav><a class="btn" href="/upload">Upload</a></nav>
+  </header>
+  <main>
+    {{ template "content" . }}
+  </main>
+  <footer>
+    <small>Go + Tesseract OCR MVP</small>
+  </footer>
+</body>
+</html>

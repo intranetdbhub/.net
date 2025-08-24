@@ -1,0 +1,10 @@
+{{ define "content" }}
+<section class="card">
+  <h2>Upload Receipt (pdf, jpg, jpeg, png, heic)</h2>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="receipt" required accept=".pdf,.jpg,.jpeg,.png,.heic,.HEIC,.png"/>
+    <button class="btn" type="submit">Upload & Extract</button>
+  </form>
+  <p>We OCR the file, extract fields & items, and store everything in MySQL.</p>
+</section>
+{{ end }}

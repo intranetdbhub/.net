@@ -1,0 +1,21 @@
+{{ define "content" }}
+<section class="card">
+  <h2>Receipts</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Merchant</th><th>Date</th><th>Total</th><th>Status</th><th>File</th><th>Created</th></tr></thead>
+    <tbody>
+    {{ range .Receipts }}
+      <tr>
+        <td><a href="/receipt/{{ .ID }}">{{ .ID }}</a></td>
+        <td>{{ if .Merchant.Valid }}{{ .Merchant.String }}{{ else }}—{{ end }}</td>
+        <td>{{ if .PurchaseDate.Valid }}{{ .PurchaseDate.Time.Format "2006-01-02" }}{{ else }}—{{ end }}</td>
+        <td>{{ if .Total.Valid }}{{ printf "%.2f" .Total.Float64 }}{{ else }}—{{ end }}</td>
+        <td>{{ .Status }}</td>
+        <td>{{ if .OriginalFile.Valid }}{{ .OriginalFile.String }}{{ end }}</td>
+        <td>{{ .CreatedAt.Format "2006-01-02 15:04" }}</td>
+      </tr>
+    {{ end }}
+    </tbody>
+  </table>
+</section>
+{{ end }}

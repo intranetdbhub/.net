@@ -1,0 +1,57 @@
+{{ define "content" }}
+<section class="grid">
+  <div class="card">
+    <h2>Receipt #{{ .R.ID }}</h2>
+    <form method="post">
+      <label>Merchant
+        <input name="merchant" value="{{ if .R.Merchant }}{{ .R.Merchant }}{{ end }}" placeholder="{{ if .R.NotVisible.merchant }}not_visible{{ end }}">
+      </label>
+      <label>Date (YYYY-MM-DD)
+        <input name="purchase_date" value="{{ if .R.PurchaseDate }}{{ .R.PurchaseDate.Format "2006-01-02" }}{{ end }}" placeholder="{{ if .R.NotVisible.purchase_date }}not_visible{{ end }}">
+      </label>
+      <label>Subtotal
+        <input name="subtotal" value="{{ if .R.Subtotal }}{{ printf "%.2f" .R.Subtotal }}{{ end }}" placeholder="{{ if .R.NotVisible.subtotal }}not_visible{{ end }}">
+      </label>
+      <label>Tax
+        <input name="tax" value="{{ if .R.Tax }}{{ printf "%.2f" .R.Tax }}{{ end }}" placeholder="{{ if .R.NotVisible.tax }}not_visible{{ end }}">
+      </label>
+      <label>Fees
+        <input name="fees" value="{{ if .R.Fees }}{{ printf "%.2f" .R.Fees }}{{ end }}" placeholder="{{ if .R.NotVisible.fees }}not_visible{{ end }}">
+      </label>
+      <label>Total
+        <input name="total" value="{{ if .R.Total }}{{ printf "%.2f" .R.Total }}{{ end }}" placeholder="{{ if .R.NotVisible.total }}not_visible{{ end }}">
+      </label>
+      <label>Currency
+        <input name="currency" value="{{ if .R.Currency }}{{ .R.Currency }}{{ end }}">
+      </label>
+      <button class="btn" type="submit">Save</button>
+    </form>
+    <p><strong>Original file:</strong> {{ .R.OriginalFile }}</p>
+    <p><strong>Status:</strong> {{ .R.Status }}</p>
+    <p><strong>Created:</strong> {{ .R.CreatedAt.Format "2006-01-02 15:04" }}</p>
+  </div>
+
+  <div class="card">
+    <h3>Items</h3>
+    <table>
+      <thead><tr><th>Label</th><th>Qty</th><th>Unit Price</th><th>Line Total</th><th>Type</th></tr></thead>
+      <tbody>
+      {{ range .Items }}
+        <tr>
+          <td>{{ .Label }}</td>
+          <td>{{ printf "%.2f" .Quantity }}</td>
+          <td>{{ if .UnitPrice }}{{ printf "%.2f" .UnitPrice }}{{ else }}—{{ end }}</td>
+          <td>{{ if .LineTotal }}{{ printf "%.2f" .LineTotal }}{{ else }}—{{ end }}</td>
+          <td>{{ if .IsFee }}Fee{{ else }}Item{{ end }}</td>
+        </tr>
+      {{ end }}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>OCR Text</h3>
+    <pre class="ocr">{{ .R.OCRText }}</pre>
+  </div>
+</section>
+{{ end }}
