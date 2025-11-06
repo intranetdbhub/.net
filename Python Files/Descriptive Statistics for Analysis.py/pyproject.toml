@@ -1,0 +1,14 @@
+[project]
+name = "data-analytics"
+version = "0.0.1"
+description = "Regis Data Analytics Class - Eholo Castro Salcedo"
+readme = "README.md"
+requires-python = ">=3.13.9"
+
+dependencies = [
+    "marimo>=0.17.2",
+    "polars",
+    "matplotlib",
+    "seaborn",
+    "pandas"
+]

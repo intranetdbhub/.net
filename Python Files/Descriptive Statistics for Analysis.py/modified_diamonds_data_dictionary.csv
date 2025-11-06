@@ -1,0 +1,15 @@
+column_name,description,data_class,data_sub_class,datatype,unit_of_measure
+carat,Diamond weight in carats.,numerical,continuous,Float64,carat
+cut,"Cut quality grade (Ideal, Very Good, Premium, Good, Fair).",categorical,ordinal,String,""
+cut_rank,Ordinal rank of cut quality (1 = best).,numerical,discrete,Int64,""
+color,Color grade (D best/colourless → J more tinted).,categorical,ordinal,String,""
+color_rank,Ordinal rank of color (1 = best).,numerical,discrete,Int64,""
+clarity,"Clarity grade (IF, VVS1/2, VS1/2, SI1/2, I1).",categorical,ordinal,String,""
+clarity_rank,Ordinal rank of clarity (for example: 1 = best).,numerical,discrete,Int64,""
+depth_pct,Total depth as percent of average diameter.,numerical,continuous,Float64,%
+table_mm,Table (top facet) width in millimeters.,numerical,continuous,Float64,mm
+price_usd,Price in US dollars.,numerical,continuous,Float64,USD
+length_mm,Length (longest dimension) in millimeters.,numerical,continuous,Float64,mm
+width_mm,Width (shortest face-to-face) in millimeters.,numerical,continuous,Float64,mm
+depth_mm,Depth (table to culet) in millimeters.,numerical,continuous,Float64,mm
+region,Inventory region / warehouse label.,categorical,nominal,String,""
