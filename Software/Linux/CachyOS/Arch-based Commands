@@ -1,0 +1,41 @@
+# to kwnow the ipv4 address:
+
+ip -4 -brief addr	
+
+# to install yay:
+
+sudo pacman -Syyu && sudo pacman -Sc && sudo pacman -Rns $(pacman -Qtdq)	
+sudo pacman -S yay	
+yay -S xrdp xorgxrdp	
+"sudo systemctl enable sshd
+sudo systemctl start sshd
+
+# to enable ssh and xrdp:
+
+sudo systemctl enable xrdp
+sudo systemctl start xrdp"	
+	
+# Installing Waybar:	
+
+sudo pacman -S waybar	#to install waybar
+/etc/xdg/waybar/config.jsonc	#Remove battery and batterybat2 constant notifications
+exec-once = waybar	#add this to above document
+nano ~/.config/hypr/hyprland.conf	#to launch the status bar permanently
+	
+# Plasma KDE Installation:
+
+sudo pacman -S plasma	#To install Plasma
+sudo pacman -S sddm	#To install Plasma Login Manager
+sudo pacman -S xdg-desktop-portal-hyprland pipewire wireplumber	
+
+# To install Steam from Arch repositories:
+
+pacman -Si steam
+
+# To install Audacity:
+
+sudo pacman -S --needed audacity ffmpeg	
+
+# To install Libre Office:
+
+sudo pacman -S --needed libreoffice-fresh	
