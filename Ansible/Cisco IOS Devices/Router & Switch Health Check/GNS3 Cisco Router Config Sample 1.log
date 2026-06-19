@@ -1,0 +1,232 @@
+﻿**Note 1: From local Linux jumpserver (ssh camus@9.9.30.9) connect to this router by using this command: ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 \
+            -oHostKeyAlgorithms=+ssh-rsa \
+            -oPubkeyAcceptedAlgorithms=+ssh-rsa \   
+            -oMACs=hmac-sha1,hmac-md5 \
+            -c aes256-cbc \
+            netadmin@9.9.35.1
+
+**Note 2: From Windows machine connect to this router by using this command in cmd: ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedAlgorithms=+ssh-rsa netadmin@9.9.35.1
+
+AURCOSTE002-CSR001A#sh run    
+Building configuration...
+
+Current configuration : 4413 bytes
+!
+! Last configuration change at 04:52:35 UTC Fri Jun 19 2026
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname AURCOSTE002-CSR001A
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$BAYZ$aBuOsxrjH8x5aHiUx2KgJ0
+!
+aaa new-model
+!
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!        
+!
+!
+!
+!
+ip name-server 8.8.8.8 1.1.1.1
+ip domain name rdc2.net
+ip admission watch-list expiry-time 0
+ip dhcp excluded-address 9.9.31.241 9.9.31.254
+ip dhcp excluded-address 192.168.122.241 192.168.122.254
+!
+ip dhcp pool dhcp_pool
+ network 9.9.31.0 255.255.255.0
+ default-router 9.9.30.11
+ dns-server 8.8.8.8 1.1.1.1
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2236895181
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2236895181
+ revocation-check none
+ rsakeypair TP-self-signed-2236895181
+!
+!
+crypto pki certificate chain TP-self-signed-2236895181
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32323336 38393531 3831301E 170D3236 30363134 32333533
+  31365A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 32333638
+  39353138 31308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100DB78 A7F4E2C8 093ACB9F 6474190B 2758ECF6 85CD9FAE 03E5D41C
+  76F637EC 87BD994A 25DAD524 E5F1ED8E CF8713DB CD1CC484 C4D1675A A32BB6FB
+  F87E7153 CC7A74CA 7F6239C6 6414D162 5548FECC EDB42647 081C6C25 E119162E
+  EACC6EA3 15061F35 436F5FB5 BB66D901 33835BCB BC8C88FD 22683F50 8768FBC6
+  D519CF74 5030932D 697D0180 85FC3A10 6ED34F8F 83FC80C7 2150947A 6F377B1F
+  41E837E6 99EC7C0D F7F392C9 D8C66F58 02A74C55 78175581 DA7B83B6 A44A3076
+  9EFA5F44 037573B5 326F528D 077D6AED 361F9A78 0BD19AF3 B56F67AF C7BC8E26
+  D586D1D5 67191CA3 4E6D81D8 C3B2EFAC 1D04FB19 2439D98F 4022769B 407A1F03
+  ED9B736B 02970203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 1403FF25 CEA752EE E0FD7C5A 4DD21DF8 BBFA48D4
+  7E301D06 03551D0E 04160414 03FF25CE A752EEE0 FD7C5A4D D21DF8BB FA48D47E 
+  300D0609 2A864886 F70D0101 05050003 82010100 7D58282D 810CDF19 2D44AA97
+  E23A297B 9B6540F9 F6DE5C77 75D7A68D D8AF6359 8522261F 087A0FFD 50DC51E0
+  17B351F9 B2EFEF77 F1C06081 BC74C93E BA94A378 8CB2A217 A81FE2FF 1F188F41
+  0838C7D3 B5CE781F EEC79C7F DFEFA8DF 4C6B944B E61A4546 1A1EB75C 91D9A025
+  70D1184E BEE1DF96 986A01A7 6D9522C5 F256A191 94F1AE71 5B4F6F27 68E20CEF
+  3427375D 1AEC2BF5 42D66705 7A9E2577 72D80DCA A2F162C5 137C1826 225EDA69
+  D0F4411C 968A5A04 DC508EA4 A4B91960 9616F5DC 7C6738F4 45FF4E5E A35976EC
+  DF35AFA9 0E1CECB0 B81FCB30 FD3FF1CC 4EE57759 F3E82779 A8CF8FCC 99958475
+  65423A7A 0F6A9A5A FDF50CDD 5827F758 170912C3
+        quit
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9NFB0Q12844
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username admin privilege 15 secret 5 $1$VtDR$C.FZXaA0VlCYNfVK47VzI.
+username netadmin privilege 15 secret 5 $1$phPb$3Cq41W.7WLs2wOkHLpOJ1.
+!
+redundancy
+!        
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 9.9.35.1 255.255.255.0
+!
+interface GigabitEthernet1
+ ip address 192.168.122.2 255.255.255.0
+ ip nat outside
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 9.9.31.1 255.255.255.0
+ ip nat inside
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+ip nat inside source list 1 interface GigabitEthernet1 overload
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 9.9.30.1
+ip route 0.0.0.0 0.0.0.0 192.168.122.1
+!
+ip ssh version 2
+!
+access-list 1 permit 9.9.31.0 0.0.0.255
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ transport input ssh
+line vty 5 15
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end
+         
+AURCOSTE002-CSR001A#write
+Building configuration...
+[OK]
